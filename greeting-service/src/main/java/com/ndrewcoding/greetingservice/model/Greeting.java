@@ -1,4 +1,4 @@
-package com.ndrewcoding.greetingservice;
+package com.ndrewcoding.greetingservice.model;
 
 public class Greeting {
 

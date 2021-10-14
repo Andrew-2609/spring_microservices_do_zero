@@ -1,5 +1,6 @@
-package com.ndrewcoding.greetingservice;
+package com.ndrewcoding.greetingservice.controller;
 
+import com.ndrewcoding.greetingservice.model.Greeting;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
