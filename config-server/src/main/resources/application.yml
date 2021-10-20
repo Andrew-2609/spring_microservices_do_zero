@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: config-server
-  profiles:
-    active:
-      - native
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Andrew-2609/erudio-config-server
+          default-label: main
+          search-paths:
+            - 'greeting-service*'
