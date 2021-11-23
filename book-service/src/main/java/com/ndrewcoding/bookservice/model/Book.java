@@ -1,5 +1,7 @@
 package com.ndrewcoding.bookservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -7,6 +9,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity(name = "book")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
