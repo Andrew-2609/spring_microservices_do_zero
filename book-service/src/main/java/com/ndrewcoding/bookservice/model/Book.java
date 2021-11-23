@@ -12,23 +12,23 @@ public class Book implements Serializable {
     private Long id;
     private String author;
     private String title;
-    private String currency;
-    private String environment;
     private Date launchDate;
     private Double price;
+    private String currency;
+    private String environment;
 
     public Book() {
 
     }
 
-    public Book(Long id, String author, String title, String currency, String environment, Date launchDate, Double price) {
+    public Book(Long id, String author, String title, Date launchDate, Double price, String currency, String environment) {
         this.id = id;
         this.author = author;
         this.title = title;
-        this.currency = currency;
-        this.environment = environment;
         this.launchDate = launchDate;
         this.price = price;
+        this.currency = currency;
+        this.environment = environment;
     }
 
     public Long getId() {
