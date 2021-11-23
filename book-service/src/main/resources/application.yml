@@ -3,3 +3,20 @@ server:
 spring:
   application:
     name: book-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.17.0.2:3306/book_service?useTimezone=true&serverTimeZone=UTC
+    username: intellij
+    password: myMysqlPassword0502
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  flyway:
+    url: jdbc:mysql://172.17.0.2:3306/
+    schemas: book_service
+    user: intellij
+    password: myMysqlPassword0502
