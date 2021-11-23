@@ -3,3 +3,20 @@ server:
 spring:
   application:
     name: cambio-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:musql://localhost:172.17.0.2/cambio_service?useTimezone=true&serverTimeZone=UTC
+    username: intellij
+    password: myMysqlPassword0502
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  flyway:
+    url: jdbc:musql://localhost:172.17.0.2/
+    schemas: cambio_service
+    user: intellij
+    password: myMysqlPassword0502
