@@ -8,6 +8,10 @@ spring:
     url: jdbc:mysql://172.17.0.2:3306/book_service?useTimezone=true&serverTimeZone=UTC
     username: intellij
     password: myMysqlPassword0502
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      fail-on-empty-beans: false
   jpa:
     hibernate:
       ddl-auto: update
