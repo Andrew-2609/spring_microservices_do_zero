@@ -5,7 +5,7 @@ spring:
     name: cambio-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:musql://localhost:172.17.0.2/cambio_service?useTimezone=true&serverTimeZone=UTC
+    url: jdbc:mysql://172.17.0.2:3306/cambio_service?useTimezone=true&serverTimeZone=UTC
     username: intellij
     password: myMysqlPassword0502
   jpa:
@@ -16,7 +16,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   flyway:
-    url: jdbc:musql://localhost:172.17.0.2/
+    url: jdbc:mysql://172.17.0.2:3306/
     schemas: cambio_service
     user: intellij
     password: myMysqlPassword0502
