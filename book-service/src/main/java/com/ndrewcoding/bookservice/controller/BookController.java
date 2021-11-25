@@ -1,27 +1,26 @@
 package com.ndrewcoding.bookservice.controller;
 
 import com.ndrewcoding.bookservice.model.Book;
+import com.ndrewcoding.bookservice.proxy.CambioProxy;
 import com.ndrewcoding.bookservice.repository.BookRepository;
 import com.ndrewcoding.bookservice.response.Cambio;
 import org.springframework.core.env.Environment;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("book-service")
 public class BookController {
 
     private final BookRepository bookRepository;
+    private final CambioProxy cambioProxy;
     private final Environment environment;
 
-    public BookController(BookRepository bookRepository, Environment environment) {
+    public BookController(BookRepository bookRepository, CambioProxy cambioProxy, Environment environment) {
         this.bookRepository = bookRepository;
+        this.cambioProxy = cambioProxy;
         this.environment = environment;
     }
 
@@ -30,17 +29,11 @@ public class BookController {
         Book book = bookRepository.getById(id);
         if (book == null) throw new RuntimeException("Book not Found!");
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("amount", book.getPrice().toString());
-        params.put("from", "USD");
-        params.put("to", currency);
-
-        ResponseEntity<Cambio> response = new RestTemplate().getForEntity("http://localhost:8000/cambio-service/{amount}/{from}/{to}", Cambio.class, params);
-        Cambio cambio = response.getBody();
+        Cambio cambio = cambioProxy.getCambio(book.getPrice(), "USD", currency);
 
         String port = environment.getProperty("local.server.port");
 
-        book.setEnvironment(port);
+        book.setEnvironment(port + " FEIGN");
         book.setPrice(cambio.getConvertedValue());
 
         return book;
