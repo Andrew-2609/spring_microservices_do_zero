@@ -3,3 +3,7 @@ server:
 spring:
   application:
     name: naming-server
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
