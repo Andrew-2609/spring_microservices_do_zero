@@ -26,8 +26,7 @@ public class BookController {
 
     @GetMapping("/{id}/{currency}")
     public Book getBook(@PathVariable("id") Long id, @PathVariable("currency") String currency) {
-        Book book = bookRepository.getById(id);
-        if (book == null) throw new RuntimeException("Book not Found!");
+        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not Found!"));
 
         Cambio cambio = cambioProxy.getCambio(book.getPrice(), "USD", currency);
 
