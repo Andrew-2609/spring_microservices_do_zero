@@ -24,3 +24,7 @@ spring:
     schemas: book_service
     user: intellij
     password: myMysqlPassword0502
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
