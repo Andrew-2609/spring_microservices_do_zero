@@ -32,7 +32,7 @@ public class BookController {
 
         String port = environment.getProperty("local.server.port");
 
-        book.setEnvironment(port + " FEIGN");
+        book.setEnvironment("Book-Service Port: " + port + " - Cambio-Service Port: " + cambio.getEnvironment());
         book.setPrice(cambio.getConvertedValue());
 
         return book;
