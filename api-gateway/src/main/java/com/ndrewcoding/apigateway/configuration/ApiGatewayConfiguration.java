@@ -10,7 +10,9 @@ public class ApiGatewayConfiguration {
 
     @Bean
     public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
-        return builder.routes().build();
+        return builder.routes()
+                .route(p -> p.path("/get").uri("http://httpbin.org:80"))
+                .build();
     }
 
 }
