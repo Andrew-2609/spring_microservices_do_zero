@@ -3,12 +3,12 @@ server:
 spring:
   application:
     name: api-gateway
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+    #cloud:
+    #gateway:
+    #discovery:
+    #locator:
+    #enabled: true
+    #ower-case-service-id: true
 eureka:
   client:
     service-url:
