@@ -1,6 +1,6 @@
 package com.ndrewcoding.bookservice.controller;
 
-import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class FooBarController {
     private final Logger logger = LoggerFactory.getLogger(FooBarController.class);
 
     @GetMapping("/foo-bar")
-    @Retry(name = "foo-bar", fallbackMethod = "fallbackMethod")
+    @CircuitBreaker(name = "default", fallbackMethod = "fallbackMethod")
     public String fooBar() {
         logger.info("Request to foo-bar was received!");
         ResponseEntity<String> response = new RestTemplate().getForEntity("http://localhost:8080/foo-bar", String.class);
