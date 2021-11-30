@@ -1,6 +1,6 @@
 package com.ndrewcoding.bookservice.controller;
 
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ public class FooBarController {
     private final Logger logger = LoggerFactory.getLogger(FooBarController.class);
 
     @GetMapping("/foo-bar")
-    @RateLimiter(name = "default", fallbackMethod = "fallbackMethod")
+    @Bulkhead(name = "default", fallbackMethod = "fallbackMethod")
     public String fooBar() {
         logger.info("Request to foo-bar was received!");
         // ResponseEntity<String> response = new RestTemplate().getForEntity("http://localhost:8080/foo-bar", String.class);
