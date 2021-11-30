@@ -15,6 +15,7 @@ public class ApiGatewayConfiguration {
                         p -> p.path("/get")
                                 .filters(
                                         f -> f.addRequestHeader("Greeting", "Hello, World")
+                                                .addRequestParameter("Gruss", "Hallo")
                                 )
                                 .uri("http://httpbin.org:80")
                 )
