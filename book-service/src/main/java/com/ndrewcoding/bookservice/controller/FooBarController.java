@@ -16,7 +16,7 @@ public class FooBarController {
     private final Logger logger = LoggerFactory.getLogger(FooBarController.class);
 
     @GetMapping("/foo-bar")
-    @Retry(name = "default")
+    @Retry(name = "foo-bar")
     public String fooBar() {
         logger.info("Request to foo-bar was received!");
         ResponseEntity<String> response = new RestTemplate().getForEntity("http://localhost:8080/foo-bar", String.class);
