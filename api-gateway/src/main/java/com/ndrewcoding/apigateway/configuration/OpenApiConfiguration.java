@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Lazy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 public class OpenApiConfiguration {
@@ -19,7 +20,7 @@ public class OpenApiConfiguration {
     public List<GroupedOpenApi> apis(SwaggerUiConfigParameters configParameters, RouteDefinitionLocator locator) {
         List<RouteDefinition> routeDefinitions = locator.getRouteDefinitions().collectList().block();
 
-        routeDefinitions.stream()
+        Objects.requireNonNull(routeDefinitions).stream()
                 .filter(routeDefinition -> routeDefinition.getId().matches(".*-service"))
                 .forEach(routeDefinition -> {
                     String name = routeDefinition.getId();
