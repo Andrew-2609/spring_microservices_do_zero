@@ -5,7 +5,7 @@ spring:
     name: book-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.17.0.2:3306/book_service?useTimezone=true&serverTimeZone=UTC
+    url: jdbc:mysql://172.17.0.3:3306/book_service?useTimezone=true&serverTimeZone=UTC
     username: intellij
     password: myMysqlPassword0502
   jackson:
@@ -20,7 +20,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   flyway:
-    url: jdbc:mysql://172.17.0.2:3306/
+    url: jdbc:mysql://172.17.0.3:3306/
     schemas: book_service
     user: intellij
     password: myMysqlPassword0502
