@@ -17,6 +17,12 @@ spring:
           uri: lb://book-service
           predicates:
             - Path=/book-service/**
+        - id: openapi
+          uri: lb://api-gateway
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
 eureka:
   client:
     service-url:
