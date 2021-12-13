@@ -5,3 +5,9 @@ services:
     image: andrew2609/naming-server:0.0.1-SNAPSHOT
     ports:
       - "8761:8761"
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge
