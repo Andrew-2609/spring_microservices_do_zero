@@ -23,6 +23,9 @@ spring:
             - Path=/v3/api-docs/**
           filters:
             - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+  sleuth:
+    sampler:
+      probability: 1.0
 eureka:
   client:
     service-url:
