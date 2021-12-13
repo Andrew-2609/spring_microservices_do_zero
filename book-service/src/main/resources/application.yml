@@ -24,6 +24,9 @@ spring:
     schemas: book_service
     user: intellij
     password: myMysqlPassword0502
+  sleuth:
+    sampler:
+      probability: 1.0
 eureka:
   client:
     service-url:
