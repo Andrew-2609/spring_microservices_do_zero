@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  zipkin:
+  zipkin-server:
     image: openzipkin/zipkin:2.23.2
     ports:
       - "9411:9411"
