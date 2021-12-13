@@ -1,0 +1,7 @@
+version: '3.4'
+
+services:
+  naming-server:
+    image: andrew2609/naming-server:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
