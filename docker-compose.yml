@@ -27,6 +27,25 @@ services:
     networks:
       - microservices-network
 
+  book-db:
+    image: mysql:5.7.22
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3310:3310"
+    expose:
+      - 3310
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: admin123
+      MYSQL_DATABASE: book_service
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3310
+    networks:
+      - microservices-network
+
   naming-server:
     image: andrew2609/naming-server:0.0.1-SNAPSHOT
     ports:
