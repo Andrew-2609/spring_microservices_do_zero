@@ -1,11 +1,9 @@
 package com.ndrewcoding.bookservice.response;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Cambio implements Serializable {
-    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id;
