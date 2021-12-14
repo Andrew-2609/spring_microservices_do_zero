@@ -1,4 +1,4 @@
-FROM openjdk:17-slim
+FROM openjdk:11-slim
 ARG JAR_FILE=book-service/target/*.jar
 COPY ${JAR_FILE} app.jar
 RUN bash -c 'touch /app.jar'
