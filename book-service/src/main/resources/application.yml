@@ -20,8 +20,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect
   flyway:
-    url: jdbc:mysql://172.17.0.3:3306/
-    schemas: book_service
+    url: jdbc:mysql://172.17.0.3:3306/book_service?useTimezone=true&serverTimeZone=UTC
     user: intellij
     password: myMysqlPassword0502
   sleuth:
