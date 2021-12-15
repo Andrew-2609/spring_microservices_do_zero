@@ -15,6 +15,8 @@ services:
       - "9411:9411"
     depends_on:
       - rabbit-mq
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
     networks:
       - microservices-network
 
@@ -73,6 +75,9 @@ services:
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
     networks:
       - microservices-network
 
@@ -92,6 +97,9 @@ services:
       TZ: America/Sao_Paulo
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
       SPRING.DATASOURCE.URL: jdbc:mysql://cambio-db:3308/cambio_service?useSSL=false&serverTimeZone=UTC&enabledTLSProtocols=TLSv1.2
       SPRING.DATASOURCE.USERNAME: root
       SPRING.DATASOURCE.PASSWORD: admin123
@@ -117,6 +125,9 @@ services:
       TZ: America/Sao_Paulo
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
       SPRING.DATASOURCE.URL: jdbc:mysql://book-db:3310/book_service?useSSL=false&serverTimeZone=UTC&enabledTLSProtocols=TLSv1.2
       SPRING.DATASOURCE.USERNAME: root
       SPRING.DATASOURCE.PASSWORD: admin123
