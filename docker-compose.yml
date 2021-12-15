@@ -13,6 +13,8 @@ services:
     image: openzipkin/zipkin:2.23.2
     ports:
       - "9411:9411"
+    depends_on:
+      - rabbit-mq
     networks:
       - microservices-network
 
@@ -67,6 +69,7 @@ services:
       - "8765:8765"
     depends_on:
       - naming-server
+      - rabbit-mq
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
@@ -84,6 +87,7 @@ services:
     depends_on:
       - naming-server
       - cambio-db
+      - rabbit-mq
     environment:
       TZ: America/Sao_Paulo
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
@@ -108,6 +112,7 @@ services:
     depends_on:
       - naming-server
       - book-db
+      - rabbit-mq
     environment:
       TZ: America/Sao_Paulo
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
