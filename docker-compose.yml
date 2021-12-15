@@ -8,6 +8,14 @@ services:
     networks:
       - microservices-network
 
+  rabbit-mq:
+    image: rabbitmq:3.8.14-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservices-network
+
   cambio-db:
     image: mysql:5.7.22
     command: --default-authentication-plugin=mysql_native_password
