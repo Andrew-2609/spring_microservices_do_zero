@@ -37,3 +37,7 @@ jobs:
       - name: Build Cambio Microservice Jar
         working-directory: ./cambio-service
         run: mvn clean package -DskipTests
+        
+      - name: Build Book Microservice Jar
+        working-directory: ./book-service
+        run: mvn clean package -DskipTests
