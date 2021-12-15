@@ -33,3 +33,7 @@ jobs:
       - name: Build API Gateway Container Image
         working-directory: ./api-gateway
         run: mvn spring-boot:build-image -DskipTests
+        
+      - name: Build Cambio Microservice Jar
+        working-directory: ./cambio-service
+        run: mvn clean package -DskipTests
