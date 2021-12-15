@@ -45,3 +45,17 @@ jobs:
       - name: Docker Compose Build
         working-directory: .
         run: docker-compose build
+        
+      - name: Tag the Container Images
+        run: |
+          docker tag ${{ secrets.DOCKER_USERNAME }}/naming-server:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/naming-server:${{ github.run_id }}
+          docker tag ${{ secrets.DOCKER_USERNAME }}/api-gateway:0.0.1-SNAPSHOT ${{ secrets.DOCKER_USERNAME }}/api-gateway:${{ github.run_id }}
+          docker tag ${{ secrets.DOCKER_USERNAME }}/cambio-service:latest ${{ secrets.DOCKER_USERNAME }}/cambio-service:${{ github.run_id }}
+          docker tag ${{ secrets.DOCKER_USERNAME }}/book-service:latest ${{ secrets.DOCKER_USERNAME }}/book-service:${{ github.run_id }}
+          
+      - name: Push to Docker Hub Container Registry
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/naming-server:${{ github.run_id }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:${{ github.run_id }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/cambio-service:${{ github.run_id }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/book-service:${{ github.run_id }}
