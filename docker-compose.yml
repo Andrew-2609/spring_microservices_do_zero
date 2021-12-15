@@ -1,18 +1,18 @@
 version: '3.4'
 
 services:
-  zipkin-server:
-    image: openzipkin/zipkin:2.23.2
-    ports:
-      - "9411:9411"
-    networks:
-      - microservices-network
-
   rabbit-mq:
     image: rabbitmq:3.8.14-management
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - microservices-network
+
+  zipkin-server:
+    image: openzipkin/zipkin:2.23.2
+    ports:
+      - "9411:9411"
     networks:
       - microservices-network
 
