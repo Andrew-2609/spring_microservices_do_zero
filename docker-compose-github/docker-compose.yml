@@ -1,0 +1,137 @@
+version: '3.4'
+
+services:
+  rabbit-mq:
+    image: rabbitmq:3.8.14-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservices-network
+
+  zipkin-server:
+    image: openzipkin/zipkin:2.23.2
+    restart: always
+    ports:
+      - "9411:9411"
+    depends_on:
+      - rabbit-mq
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+    networks:
+      - microservices-network
+
+  cambio-db:
+    image: mysql:5.7.22
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3308:3308"
+    expose:
+      - 3308
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: admin123
+      MYSQL_DATABASE: cambio_service
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3308
+    networks:
+      - microservices-network
+
+  book-db:
+    image: mysql:5.7.22
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3310:3310"
+    expose:
+      - 3310
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: admin123
+      MYSQL_DATABASE: book_service
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_TCP_PORT: 3310
+    networks:
+      - microservices-network
+
+  naming-server:
+    image: andrew2609/naming-server:latest
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+
+  api-gateway:
+    image: andrew2609/api-gateway:latest
+    ports:
+      - "8765:8765"
+    depends_on:
+      - naming-server
+      - rabbit-mq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+    networks:
+      - microservices-network
+
+  cambio-service:
+    image: andrew2609/cambio-service:latest
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - naming-server
+      - cambio-db
+      - rabbit-mq
+    environment:
+      TZ: America/Sao_Paulo
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING.DATASOURCE.URL: jdbc:mysql://cambio-db:3308/cambio_service?useSSL=false&serverTimeZone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: admin123
+      SPRING.FLYWAY.URL: jdbc:mysql://cambio-db:3308/cambio_service?useSSL=false&serverTimeZone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: admin123
+    networks:
+      - microservices-network
+
+  book-service:
+    image: andrew2609/book-service:latest
+    restart: always
+    ports:
+      - "8100:8100"
+    depends_on:
+      - naming-server
+      - book-db
+      - rabbit-mq
+    environment:
+      TZ: America/Sao_Paulo
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      SPRING_RABBITMQ_HOST: rabbit-mq
+      RABBIT_URI: amqp://guest:guest@rabbit-mq:5672
+      SPRING.DATASOURCE.URL: jdbc:mysql://book-db:3310/book_service?useSSL=false&serverTimeZone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: admin123
+      SPRING.FLYWAY.URL: jdbc:mysql://book-db:3310/book_service?useSSL=false&serverTimeZone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: admin123
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge
